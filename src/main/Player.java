@@ -19,6 +19,10 @@ public class Player {
         players = newArray;
     }
 
+    public boolean strategy(){
+        return true;
+    }
+
     private boolean strategy1(){        // always dealt a card
         return true;
     }
