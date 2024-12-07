@@ -7,7 +7,8 @@ public class testing{
     
     public static void main(String[] args){
         // System.out.println(Arrays.toString(deck));
-        System.out.println(plays.length);
+        String breakLine = "-------------------- \n" ;
+        System.out.println(breakLine);
         
 
 
