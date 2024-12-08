@@ -16,9 +16,10 @@ public class PiratePairs {
 
         System.out.println(Arrays.toString(Player.players)); // array of all players
 
+        boolean x = false;
         int count = 1;
-        // while(Player.players.length > 5){
-        while (count < 8) {
+        while(Player.players.length > 1){
+        // while (count < 8) {
             for (Player activePlayer : Player.players) {
                 System.out.println("---------------------");
                 System.out.println(activePlayer.getName() + "'s turn");
@@ -40,10 +41,10 @@ public class PiratePairs {
                         System.out.println("pair of " + pair);
                         System.out.println("new score " + activePlayer.getScore());
                     }
-                    
-
-                    
-
+                    if(deck.isDeckEmpty()){
+                        deck.integrateDiscarded(discardDeck.getCardsArray());
+                        x = true;
+                    }
                 } else {                                                // decided to sleal a card
                     // find lowest card and take()
                 }
@@ -53,6 +54,10 @@ public class PiratePairs {
                 }
             }
             count++;
+        }
+        System.out.println(Player.players[0].getName() + " is the winner");
+        if(x){
+            System.out.println("worked");
         }
 
     }

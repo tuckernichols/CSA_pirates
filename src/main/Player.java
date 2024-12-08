@@ -43,7 +43,7 @@ public class Player {
         int index = 0;                  // used an enhanced loop and idx variable because if i used normal for loop
         for(Player p: players){         // i wouldnt be able to not inciment the idx when (p == this)
             if(p != this){              // this way index is only incimented when (p != this)
-                newArray[index] = this;
+                newArray[index] = p;
                 index ++;
             }
         }

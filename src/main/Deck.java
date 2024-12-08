@@ -2,7 +2,7 @@ import java.util.Arrays;
 // Shift + Option + F. format 
 
 public class Deck {
-    public static int[] deck = new int[55];
+    private int[] deck = new int[55];
 
     public Deck() {
         setDeck();
@@ -36,7 +36,17 @@ public class Deck {
         }
         return newArray;
     }
+    public boolean isDeckEmpty(){
+        if(deck.length == 0){
+            return true;
+        }
+        return false;
+    }
 
+    public void integrateDiscarded(int[] discarded){
+        deck = discarded;
+
+    }
 
 
 
