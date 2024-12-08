@@ -14,7 +14,7 @@ public class Player {
     private void appendItemPlayer() {
         Player[] newArray = new Player[players.length + 1];
         for (int i = 0; i < players.length; i++) {
-            newArray[i] = players[0];
+            newArray[i] = players[i];
         }
         newArray[players.length] = this;
         players = newArray;
@@ -70,6 +70,9 @@ public class Player {
     }
     public String getCards(){
         return Arrays.toString(cards);
+    }
+    public int getScore(){
+        return score;
     }
 
 }

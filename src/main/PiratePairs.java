@@ -17,7 +17,12 @@ public class PiratePairs {
         // while(Player.players.length > 5){
         while (count < 2) {
             for (Player activePlayer : Player.players) {
+                System.out.println("---------------------"); 
                 System.out.println(activePlayer.getName() + "'s turn"); 
+                System.out.println("cards: " + activePlayer.getCards()); 
+                System.out.println("score: " + activePlayer.getScore() ); 
+
+
                 boolean takeCardDecision = activePlayer.strategy();
                 if (takeCardDecision) {
                     int card = deck.dealCard();
