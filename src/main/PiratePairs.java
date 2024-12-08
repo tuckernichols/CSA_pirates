@@ -11,23 +11,35 @@ public class PiratePairs {
         Player Bucky = new Player("Bucky");
         Player Thor = new Player("Thor");
 
+        int losingScore = (int) (60.0 / Player.players.length) + 1;
+
         System.out.println(Arrays.toString(Player.players)); // array of all players
 
         int count = 1;
         // while(Player.players.length > 5){
-        while (count < 2) {
+        while (count < 3) {
             for (Player activePlayer : Player.players) {
-                System.out.println("---------------------"); 
-                System.out.println(activePlayer.getName() + "'s turn"); 
-                System.out.println("cards: " + activePlayer.getCards()); 
-                System.out.println("score: " + activePlayer.getScore() ); 
-
+                System.out.println("---------------------");
+                System.out.println(activePlayer.getName() + "'s turn");
+                System.out.println("cards: " + activePlayer.getCards());
+                System.out.println("score: " + activePlayer.getScore());
 
                 boolean takeCardDecision = activePlayer.strategy();
                 if (takeCardDecision) {
                     int card = deck.dealCard();
-                    System.out.println(card + " card"); 
                     activePlayer.takeCard(card);
+                    int pair = activePlayer.findPair();
+                    activePlayer.setScore(pair);
+
+                    System.out.println("dealt card: " + card);
+                    System.out.println("pair of " + pair);
+
+                } else {
+                    // find lowest card and take()
+                }
+                if (activePlayer.getScore() > losingScore) {
+                    activePlayer.eliminatePlayer();
+                    System.out.println(activePlayer.getName() + " is out");
                 }
             }
             count++;
