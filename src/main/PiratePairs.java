@@ -3,6 +3,7 @@ import java.util.Arrays;
 public class PiratePairs {
     public static void main(String[] args) {
         Deck deck = new Deck();
+        DiscardDeck discardDeck = new DiscardDeck();
 
         Player peter = new Player("peter"); // always takes a card
         Player tony = new Player("tony");
@@ -17,7 +18,7 @@ public class PiratePairs {
 
         int count = 1;
         // while(Player.players.length > 5){
-        while (count < 3) {
+        while (count < 8) {
             for (Player activePlayer : Player.players) {
                 System.out.println("---------------------");
                 System.out.println(activePlayer.getName() + "'s turn");
@@ -25,16 +26,25 @@ public class PiratePairs {
                 System.out.println("score: " + activePlayer.getScore());
 
                 boolean takeCardDecision = activePlayer.strategy();
-                if (takeCardDecision) {
+                if (takeCardDecision) {                                 // decided to take card
                     int card = deck.dealCard();
                     activePlayer.takeCard(card);
                     int pair = activePlayer.findPair();
-                    activePlayer.setScore(pair);
-
                     System.out.println("dealt card: " + card);
-                    System.out.println("pair of " + pair);
+                    
+                    if(pair > 0){
+                        activePlayer.setScore(pair);
+                        discardDeck.discardCards(activePlayer.getCardsArray());
+                        activePlayer.resetCards();
+                         
+                        System.out.println("pair of " + pair);
+                        System.out.println("new score " + activePlayer.getScore());
+                    }
+                    
 
-                } else {
+                    
+
+                } else {                                                // decided to sleal a card
                     // find lowest card and take()
                 }
                 if (activePlayer.getScore() > losingScore) {

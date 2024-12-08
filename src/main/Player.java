@@ -73,6 +73,9 @@ public class Player {
     public String getCards() {
         return Arrays.toString(cards);
     }
+    public int[] getCardsArray() {
+        return cards;
+    }
 
     public int getScore() {
         return score;
@@ -81,5 +84,8 @@ public class Player {
     // setters
     public void setScore(int scoreInciment) {
         score += scoreInciment;
+    }
+    public void resetCards(){
+        cards = new int[0];
     }
 }
