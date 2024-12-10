@@ -38,16 +38,43 @@ public class Player {
         return 0;
     }
 
-    public void eliminatePlayer(){
-        Player[] newArray = new Player[players.length - 1];
-        int index = 0;                  // used an enhanced loop and idx variable because if i used normal for loop
-        for(Player p: players){         // i wouldnt be able to not inciment the idx when (p == this)
-            if(p != this){              // this way index is only incimented when (p != this)
-                newArray[index] = p;
-                index ++;
+    public int findLowestCard() {
+        int lowestCard = 10;
+        Player playerWithCard = null;
+        for (Player p : players) {
+            if (p != this) {
+                for (int card : p.getCardsArray()) {
+                    if (card < lowestCard) {
+                        lowestCard = card;
+                        playerWithCard = p;
+                    }
+                }
             }
         }
-    players = newArray;
+        if (playerWithCard != null) {
+            System.out.println(playerWithCard.getName());
+            return lowestCard;
+        }
+        return -1;
+    }
+
+    public void eliminatePlayer() {
+        Player[] newArray = new Player[players.length - 1];
+        int index = 0; // used an enhanced loop and idx variable because if i used normal for loop
+        for (Player p : players) { // i wouldnt be able to not inciment the idx when (p == this)
+            if (p != this) { // this way index is only incimented when (p != this)
+                newArray[index] = p;
+                index++;
+            }
+        }
+        players = newArray;
+    }
+
+    public static boolean existsWinner() {
+        if (players.length == 1) {
+            return true;
+        }
+        return false;
     }
 
     public boolean strategy() { // game strategies
@@ -73,6 +100,7 @@ public class Player {
     public String getCards() {
         return Arrays.toString(cards);
     }
+
     public int[] getCardsArray() {
         return cards;
     }
@@ -85,7 +113,8 @@ public class Player {
     public void setScore(int scoreInciment) {
         score += scoreInciment;
     }
-    public void resetCards(){
+
+    public void resetCards() {
         cards = new int[0];
     }
 }

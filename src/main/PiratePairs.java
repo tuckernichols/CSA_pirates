@@ -16,10 +16,9 @@ public class PiratePairs {
 
         System.out.println(Arrays.toString(Player.players)); // array of all players
 
-        boolean x = false;
         int count = 1;
-        while(Player.players.length > 1){
-        // while (count < 8) {
+        while (Player.players.length > 1) {
+            // while (count < 8) {
             for (Player activePlayer : Player.players) {
                 System.out.println("---------------------");
                 System.out.println(activePlayer.getName() + "'s turn");
@@ -27,38 +26,46 @@ public class PiratePairs {
                 System.out.println("score: " + activePlayer.getScore());
 
                 boolean takeCardDecision = activePlayer.strategy();
-                if (takeCardDecision) {                                 // decided to take card
+                if (takeCardDecision) { // decided to take card
                     int card = deck.dealCard();
                     activePlayer.takeCard(card);
                     int pair = activePlayer.findPair();
                     System.out.println("dealt card: " + card);
-                    
-                    if(pair > 0){
+
+                    if (pair > 0) {
                         activePlayer.setScore(pair);
                         discardDeck.discardCards(activePlayer.getCardsArray());
                         activePlayer.resetCards();
-                         
+
                         System.out.println("pair of " + pair);
                         System.out.println("new score " + activePlayer.getScore());
                     }
-                    if(deck.isDeckEmpty()){
+                    if (deck.isDeckEmpty()) {
                         deck.integrateDiscarded(discardDeck.getCardsArray());
-                        x = true;
                     }
-                } else {                                                // decided to sleal a card
-                    // find lowest card and take()
+                } else { // decided to sleal a card
+                    int lowestCard = activePlayer.findLowestCard(); // called the method on active player so it doesnt
+                                                                    // search his own cards for lowest
+                    System.out.println(lowestCard);
                 }
-                if (activePlayer.getScore() > losingScore) {
+
+                if (activePlayer.getScore() > losingScore) { // elim and check winner
                     activePlayer.eliminatePlayer();
                     System.out.println(activePlayer.getName() + " is out");
+                    if (Player.existsWinner()) {
+                        System.out.println(Player.players[0].getName() + " is the winner");
+                    }
                 }
             }
             count++;
         }
-        System.out.println(Player.players[0].getName() + " is the winner");
-        if(x){
-            System.out.println("worked");
-        }
-
     }
 }
+
+/*
+ * to do
+ * take card
+ * look at all problems
+ * work on differenge statagies per player
+ * 
+ */
