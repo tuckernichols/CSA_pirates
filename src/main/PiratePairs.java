@@ -2,15 +2,16 @@ import java.util.Arrays;
 
 public class PiratePairs {
     public static void main(String[] args) {
+        boolean gameRunning = true;
         Deck deck = new Deck();
         DiscardDeck discardDeck = new DiscardDeck();
 
         new Player("peter", 1);     // always takes a card
-        new Player("tony", 1);
-        new Player("Stephen", 1);
-        new Player("Bruce", 1);
+        new Player("tony", 2);
+        new Player("Stephen", 3);
+        new Player("Bruce", 4);
         new Player("Bucky", 1);
-        new Player("Thor", 2);
+        new Player("Thor", 1);
 
         int losingScore = (int) (60.0 / Player.players.length) + 1;
 
@@ -18,11 +19,10 @@ public class PiratePairs {
 
         while (Player.players.length > 1) {
             for (Player activePlayer : Player.players) {
-                System.out.println("---------------------");
-                System.out.println(activePlayer.getName() + "'s turn");
-                System.out.println("cards: " + activePlayer.getCards());
-                System.out.println("score: " + activePlayer.getScore());
-
+                if (! gameRunning){
+                    continue;
+                }
+                activePlayer.printPreConditions();
                 boolean takeCardDecision = activePlayer.strategy();
                 if (takeCardDecision) { // decided to take card
                     int card = deck.dealCard();
@@ -41,30 +41,26 @@ public class PiratePairs {
                     if (deck.isDeckEmpty()) {
                         deck.integrateDiscarded(discardDeck.getCardsArray());
                     }
-                } else { // decided to sleal a card
-                    int lowestCard = activePlayer.findLowestCard(); // called the method on active player so it doesnt
+                } else {                // decided to sleal a card
+                    int lowestCard = activePlayer.findLowestCard(); // called the method on active player so it doesnt check self.cards
                     discardDeck.discardCards(activePlayer.getCardsArray());
                     int[] tempArray = { lowestCard };
                     discardDeck.discardCards(tempArray);
                     activePlayer.resetCards();
-                    activePlayer.addScore(lowestCard); // search his own cards for lowest
+                    activePlayer.addScore(lowestCard);
 
                     System.out.println(activePlayer.getName() + " stole a " + lowestCard);
                     System.out.println("New score " + activePlayer.getScore());
-
                 }
 
                 if (activePlayer.getScore() > losingScore) { // elim and check winner
                     activePlayer.eliminatePlayer();
                     System.out.println(activePlayer.getName() + " is out");
                     if (Player.existsWinner()) {
-                        System.out.println(Player.players[0].getName() + " is the winner");
-                        continue;
+                        gameRunning = Player.endGame();
                     }
                 }
             }
         }
-        System.out.println("GAME OVER");
     }
 }
-

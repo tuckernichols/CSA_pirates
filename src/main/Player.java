@@ -92,12 +92,36 @@ public class Player {
         return false;
     }
 
+    // outputs
+    public static boolean endGame() {
+        System.out.println("---------------------");
+        System.out.println("GAME OVER");
+        System.out.println(Player.players[0].getName() + " is the winner");
+        players = new Player[0];
+        return false;
+    }
+
+    public void printPreConditions() {
+        System.out.println("---------------------");
+        System.out.println(name + "'s turn");
+        System.out.println("cards: " + Arrays.toString(cards));
+        System.out.println("score: " + score);
+    }
+
     // game strategies
     public boolean strategy() { // true == takecard | false = steal card
         if (strategyNumber == 1) {
+            System.out.println("stat 1");
             return strategy1();
         } else if (strategyNumber == 2) {
+            System.out.println("stat 2");
             return strategy2();
+        } else if (strategyNumber == 3) {
+            System.out.println("stat 3");
+            return strategy3();
+        } else if (strategyNumber == 4) {
+            System.out.println("stat 4");
+            return strategy4();
         }
         return true;
     }
@@ -111,6 +135,30 @@ public class Player {
             return true;
         }
         return false;
+    }
+
+    private boolean strategy3() {
+        int sum = 0;
+        for (int card : cards) {
+            sum += card;
+        }
+        if (sum > 30 - score || cards.length > 4) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean strategy4() {
+        int lowest = 10;
+        for (int card : cards) {
+            if (card < lowest) {
+                lowest = card;
+            }
+        }
+        if (lowest > 5 || cards.length > 3) {
+            return false;
+        }
+        return true;
     }
 
     // getters
