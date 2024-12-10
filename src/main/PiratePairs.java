@@ -5,20 +5,18 @@ public class PiratePairs {
         Deck deck = new Deck();
         DiscardDeck discardDeck = new DiscardDeck();
 
-        Player peter = new Player("peter", 1); // always takes a card
-        Player tony = new Player("tony", 1);
-        Player Stephen = new Player("Stephen", 1);
-        Player Bruce = new Player("Bruce", 1);
-        Player Bucky = new Player("Bucky", 1);
-        Player Thor = new Player("Thor", 2);
+        new Player("peter", 1);     // always takes a card
+        new Player("tony", 1);
+        new Player("Stephen", 1);
+        new Player("Bruce", 1);
+        new Player("Bucky", 1);
+        new Player("Thor", 2);
 
         int losingScore = (int) (60.0 / Player.players.length) + 1;
 
         System.out.println(Arrays.toString(Player.players)); // array of all players
 
-        int count = 1;
         while (Player.players.length > 1) {
-            // while (count < 8) {
             for (Player activePlayer : Player.players) {
                 System.out.println("---------------------");
                 System.out.println(activePlayer.getName() + "'s turn");
@@ -46,13 +44,13 @@ public class PiratePairs {
                 } else { // decided to sleal a card
                     int lowestCard = activePlayer.findLowestCard(); // called the method on active player so it doesnt
                     discardDeck.discardCards(activePlayer.getCardsArray());
-                    int[] tempArray = {lowestCard};
+                    int[] tempArray = { lowestCard };
                     discardDeck.discardCards(tempArray);
                     activePlayer.resetCards();
-                    activePlayer.addScore(lowestCard);                                               // search his own cards for lowest
-                    
+                    activePlayer.addScore(lowestCard); // search his own cards for lowest
+
                     System.out.println(activePlayer.getName() + " stole a " + lowestCard);
-                    System.out.println("New score is now " + activePlayer.getScore());
+                    System.out.println("New score " + activePlayer.getScore());
 
                 }
 
@@ -61,18 +59,12 @@ public class PiratePairs {
                     System.out.println(activePlayer.getName() + " is out");
                     if (Player.existsWinner()) {
                         System.out.println(Player.players[0].getName() + " is the winner");
+                        continue;
                     }
                 }
             }
-            count++;
         }
+        System.out.println("GAME OVER");
     }
 }
 
-/*
- * to do
- * take card
- * look at all problems
- * work on differenge statagies per player
- * 
- */

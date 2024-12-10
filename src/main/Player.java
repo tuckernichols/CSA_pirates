@@ -30,18 +30,15 @@ public class Player {
         newArray[cards.length] = card;
         this.cards = newArray;
     }
-    
-    public void removeCard(int cardValue){
+
+    public void removeCard(int cardValue) {
         System.out.println(this.getName() + " lost card " + cardValue);
-        System.out.println(this.getCards());
         int[] newArray = new int[cards.length - 1];
         int countIndependent = 0;
         for (int i = 0; i < cards.length; i++) {
-            System.out.println(cards[i]);
-            if(cards[i] != cardValue){
-                System.out.println(cards[i] + " inside");
+            if (cards[i] != cardValue) {
                 newArray[countIndependent] = cards[i];
-                countIndependent ++;
+                countIndependent++;
             }
         }
         cards = newArray;
@@ -96,13 +93,13 @@ public class Player {
     }
 
     // game strategies
-    public boolean strategy() {         // true == takecard | false = steal card
-        if(strategyNumber == 1){
+    public boolean strategy() { // true == takecard | false = steal card
+        if (strategyNumber == 1) {
             return strategy1();
-        } else if(strategyNumber == 2){
+        } else if (strategyNumber == 2) {
             return strategy2();
         }
-        return strategy1();
+        return true;
     }
 
     private boolean strategy1() { // always dealt a card
@@ -113,9 +110,7 @@ public class Player {
         if (cards.length == 0) {
             return true;
         }
-        System.out.println("stat 2");
         return false;
-
     }
 
     // getters

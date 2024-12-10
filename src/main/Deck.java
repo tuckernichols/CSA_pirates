@@ -1,6 +1,3 @@
-import java.util.Arrays;
-// Shift + Option + F. format 
-
 public class Deck {
     private int[] deck = new int[55];
 
@@ -45,7 +42,5 @@ public class Deck {
 
     public void integrateDiscarded(int[] discarded) {
         deck = discarded;
-
     }
-
 }

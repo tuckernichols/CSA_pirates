@@ -1,6 +1,5 @@
 import java.util.Arrays;
 
-// System.out.println()
 public class DiscardDeck {
     private int[] discarded = new int[0];
 
