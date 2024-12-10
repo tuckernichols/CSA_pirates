@@ -5,12 +5,12 @@ public class PiratePairs {
         Deck deck = new Deck();
         DiscardDeck discardDeck = new DiscardDeck();
 
-        Player peter = new Player("peter"); // always takes a card
-        Player tony = new Player("tony");
-        Player Stephen = new Player("Stephen");
-        Player Bruce = new Player("Bruce");
-        Player Bucky = new Player("Bucky");
-        Player Thor = new Player("Thor");
+        Player peter = new Player("peter", 1); // always takes a card
+        Player tony = new Player("tony", 1);
+        Player Stephen = new Player("Stephen", 1);
+        Player Bruce = new Player("Bruce", 1);
+        Player Bucky = new Player("Bucky", 1);
+        Player Thor = new Player("Thor", 2);
 
         int losingScore = (int) (60.0 / Player.players.length) + 1;
 
@@ -33,7 +33,7 @@ public class PiratePairs {
                     System.out.println("dealt card: " + card);
 
                     if (pair > 0) {
-                        activePlayer.setScore(pair);
+                        activePlayer.addScore(pair);
                         discardDeck.discardCards(activePlayer.getCardsArray());
                         activePlayer.resetCards();
 
@@ -45,8 +45,15 @@ public class PiratePairs {
                     }
                 } else { // decided to sleal a card
                     int lowestCard = activePlayer.findLowestCard(); // called the method on active player so it doesnt
-                                                                    // search his own cards for lowest
-                    System.out.println(lowestCard);
+                    discardDeck.discardCards(activePlayer.getCardsArray());
+                    int[] tempArray = {lowestCard};
+                    discardDeck.discardCards(tempArray);
+                    activePlayer.resetCards();
+                    activePlayer.addScore(lowestCard);                                               // search his own cards for lowest
+                    
+                    System.out.println(activePlayer.getName() + " stole a " + lowestCard);
+                    System.out.println("New score is now " + activePlayer.getScore());
+
                 }
 
                 if (activePlayer.getScore() > losingScore) { // elim and check winner

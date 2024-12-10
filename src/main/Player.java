@@ -4,11 +4,13 @@ public class Player {
     public String name;
     private int[] cards = new int[0];
     private int score = 0;
+    private int strategyNumber;
     public static Player[] players = new Player[0];
 
-    public Player(String name) {
+    public Player(String name, int strategyNumber) {
         appendItemPlayer();
         this.name = name;
+        this.strategyNumber = strategyNumber;
     }
 
     private void appendItemPlayer() {
@@ -27,6 +29,22 @@ public class Player {
         }
         newArray[cards.length] = card;
         this.cards = newArray;
+    }
+    
+    public void removeCard(int cardValue){
+        System.out.println(this.getName() + " lost card " + cardValue);
+        System.out.println(this.getCards());
+        int[] newArray = new int[cards.length - 1];
+        int countIndependent = 0;
+        for (int i = 0; i < cards.length; i++) {
+            System.out.println(cards[i]);
+            if(cards[i] != cardValue){
+                System.out.println(cards[i] + " inside");
+                newArray[countIndependent] = cards[i];
+                countIndependent ++;
+            }
+        }
+        cards = newArray;
     }
 
     public int findPair() { // will return number that has a pair or 0 if no pairs are found
@@ -52,7 +70,7 @@ public class Player {
             }
         }
         if (playerWithCard != null) {
-            System.out.println(playerWithCard.getName());
+            playerWithCard.removeCard(lowestCard);
             return lowestCard;
         }
         return -1;
@@ -77,8 +95,14 @@ public class Player {
         return false;
     }
 
-    public boolean strategy() { // game strategies
-        return true;
+    // game strategies
+    public boolean strategy() {         // true == takecard | false = steal card
+        if(strategyNumber == 1){
+            return strategy1();
+        } else if(strategyNumber == 2){
+            return strategy2();
+        }
+        return strategy1();
     }
 
     private boolean strategy1() { // always dealt a card
@@ -89,7 +113,9 @@ public class Player {
         if (cards.length == 0) {
             return true;
         }
+        System.out.println("stat 2");
         return false;
+
     }
 
     // getters
@@ -110,7 +136,7 @@ public class Player {
     }
 
     // setters
-    public void setScore(int scoreInciment) {
+    public void addScore(int scoreInciment) {
         score += scoreInciment;
     }
 
