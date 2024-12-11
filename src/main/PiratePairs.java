@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class PiratePairs {
     public static void main(String[] args) {
@@ -53,8 +52,8 @@ public class PiratePairs {
                 }
 
                 if (activePlayer.getScore() > losingScore) { // elim and check winner
-                    activePlayer.eliminatePlayer();
                     System.out.println(activePlayer.getName() + " is out");
+                    activePlayer.removePlayer();
                     if (Player.existsWinner()) {
                         gameRunning = Player.endGame();
                     }

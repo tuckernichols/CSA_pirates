@@ -1,19 +1,20 @@
 import java.util.Arrays;
 
 public class Player {
-    public String name;
+    private static final int MAX_CARD = 10;
+    private String name;
     private int[] cards = new int[0];
     private int score = 0;
     private int strategyNumber;
     private static Player[] players = new Player[0];
 
     public Player(String name, int strategyNumber) {
-        appendItemPlayer();
+        addPlayer();
         this.name = name;
         this.strategyNumber = strategyNumber;
     }
 
-    private void appendItemPlayer() {
+    private void addPlayer() {
         Player[] newArray = new Player[players.length + 1];
         for (int i = 0; i < players.length; i++) {
             newArray[i] = players[i];
@@ -22,23 +23,31 @@ public class Player {
         players = newArray;
     }
 
-    public void takeCard(int card) {
-        int[] newArray = new int[cards.length + 1];
-        for (int i = 0; i < cards.length; i++) {
-            newArray[i] = cards[i];
+    public void removePlayer() {
+        Player[] newArray = new Player[players.length - 1];
+        int index = 0; // used an enhanced loop and idx variable because if i used normal for loop
+        for (Player p : players) { // i wouldnt be able to not inciment the idx when (p == this)
+            if (p != this) { // this way index is only incimented when (p != this)
+                newArray[index] = p;
+                index++;
+            }
         }
-        newArray[cards.length] = card;
-        this.cards = newArray;
+        players = newArray;
+    }
+
+    public void takeCard(int card) {
+        cards = Arrays.copyOf(cards, cards.length + 1);
+        cards[cards.length - 1] = card;
     }
 
     public void removeCard(int cardValue) {
         System.out.println(this.getName() + " lost card " + cardValue);
         int[] newArray = new int[cards.length - 1];
-        int countIndependent = 0;
+        int newArrrayIDX = 0;
         for (int i = 0; i < cards.length; i++) {
             if (cards[i] != cardValue) {
-                newArray[countIndependent] = cards[i];
-                countIndependent++;
+                newArray[newArrrayIDX] = cards[i];
+                newArrrayIDX++;
             }
         }
         cards = newArray;
@@ -54,7 +63,7 @@ public class Player {
     }
 
     public int findLowestCard() {
-        int lowestCard = 10;
+        int lowestCard = MAX_CARD;
         Player playerWithCard = null;
         for (Player p : players) {
             if (p != this) {
@@ -73,23 +82,8 @@ public class Player {
         return -1;
     }
 
-    public void eliminatePlayer() {
-        Player[] newArray = new Player[players.length - 1];
-        int index = 0; // used an enhanced loop and idx variable because if i used normal for loop
-        for (Player p : players) { // i wouldnt be able to not inciment the idx when (p == this)
-            if (p != this) { // this way index is only incimented when (p != this)
-                newArray[index] = p;
-                index++;
-            }
-        }
-        players = newArray;
-    }
-
     public static boolean existsWinner() {
-        if (players.length == 1) {
-            return true;
-        }
-        return false;
+        return players.length == 1;
     }
 
     // outputs
@@ -154,7 +148,7 @@ public class Player {
     }
 
     private boolean strategy4() {
-        int lowest = 10;
+        int lowest = MAX_CARD;
         for (int card : cards) {
             if (card < lowest) {
                 lowest = card;
@@ -174,7 +168,7 @@ public class Player {
     }
 
     private boolean strategy6() {
-        int lowest = 10;
+        int lowest = MAX_CARD;
         int sum = 0;
         for (int card : cards) {
             sum += card;
