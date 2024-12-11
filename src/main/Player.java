@@ -5,7 +5,7 @@ public class Player {
     private int[] cards = new int[0];
     private int score = 0;
     private int strategyNumber;
-    public static Player[] players = new Player[0];
+    private static Player[] players = new Player[0];
 
     public Player(String name, int strategyNumber) {
         appendItemPlayer();

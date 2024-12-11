@@ -13,10 +13,10 @@ public class PiratePairs {
         new Player("Thor", 6);
 
         boolean gameRunning = true;
-        int losingScore = (int) (60.0 / Player.players.length) + 1;
+        int losingScore = (int) (60.0 / Player.getPlayers().length) + 1;
 
-        while (Player.players.length > 1) {
-            for (Player activePlayer : Player.players) {
+        while (Player.getPlayers().length > 1) {
+            for (Player activePlayer : Player.getPlayers()) {
                 if (!gameRunning) {
                     continue;
                 }
