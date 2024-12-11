@@ -97,7 +97,6 @@ public class Player {
         System.out.println("---------------------");
         System.out.println("GAME OVER");
         System.out.println(Player.players[0].getName() + " is the winner");
-        players = new Player[0];
         return false;
     }
 
@@ -122,6 +121,12 @@ public class Player {
         } else if (strategyNumber == 4) {
             System.out.println("stat 4");
             return strategy4();
+        } else if (strategyNumber == 5) {
+            System.out.println("stat 5");
+            return strategy5();
+        } else if (strategyNumber == 6) {
+            System.out.println("stat 6");
+            return strategy6();
         }
         return true;
     }
@@ -155,7 +160,29 @@ public class Player {
                 lowest = card;
             }
         }
-        if (lowest > 5 || cards.length > 3) {
+        if ((lowest > 6 && cards.length > 1) || cards.length > 4) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean strategy5() {
+        if (cards.length > 3) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean strategy6() {
+        int lowest = 10;
+        int sum = 0;
+        for (int card : cards) {
+            sum += card;
+            if (card < lowest) {
+                lowest = card;
+            }
+        }
+        if ((lowest > 5 && cards.length > 1) || cards.length > 3 || sum > 26) {
             return false;
         }
         return true;
@@ -176,6 +203,10 @@ public class Player {
 
     public int getScore() {
         return score;
+    }
+
+    public static Player[] getPlayers() {
+        return players;
     }
 
     // setters
