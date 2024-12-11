@@ -37,6 +37,7 @@ public class PiratePairs {
                     }
                     if (deck.isDeckEmpty()) {
                         deck.integrateDiscarded(discardDeck.getCardsArray());
+                        discardDeck.clearDeck();
                     }
                 } else { // decided to sleal a card
                     int lowestCard = activePlayer.findLowestCard(); // called the method on active player so it doesnt
