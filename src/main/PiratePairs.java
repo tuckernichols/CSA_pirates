@@ -12,16 +12,17 @@ public class PiratePairs {
         new Player("Thor", 6);
 
         boolean isGameRunning = true;
-        int losingScore = (int) (80.0 / Player.getPlayers().length) + 1;
+        int losingScore = (int) (60.0 / Player.getPlayers().length) + 1;
 
         while (isGameRunning) {
             for (Player activePlayer : Player.getPlayers()) {
                 activePlayer.printPreConditions();
                 boolean takeCardDecision = activePlayer.strategy();
+
                 if (takeCardDecision) { // decided to take card
                     int card = deck.dealCard();
                     activePlayer.takeCard(card);
-                    int pair = activePlayer.findPair();
+                    int pair = activePlayer.findPair(); // returns 0 if no pairs found
                     System.out.println("dealt card: " + card);
 
                     if (pair > 0) {
@@ -41,7 +42,7 @@ public class PiratePairs {
                 } else { // decided to sleal a card
                     int lowestCard = activePlayer.findLowestCard();
                     discardDeck.discardCards(activePlayer.getCardsArray());
-                    discardDeck.discardCards(new int[]{lowestCard}); // discard lowest card
+                    discardDeck.discardCards(new int[] { lowestCard }); // discard lowest card
                     activePlayer.resetCards();
                     activePlayer.addScore(lowestCard);
 
