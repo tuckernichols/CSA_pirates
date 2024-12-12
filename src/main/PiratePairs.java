@@ -11,14 +11,11 @@ public class PiratePairs {
         new Player("Bucky", 5);
         new Player("Thor", 6);
 
-        boolean gameRunning = true;
-        int losingScore = (int) (60.0 / Player.getPlayers().length) + 1;
+        boolean isGameRunning = true;
+        int losingScore = (int) (80.0 / Player.getPlayers().length) + 1;
 
-        while (Player.getPlayers().length > 1) {
+        while (isGameRunning) {
             for (Player activePlayer : Player.getPlayers()) {
-                if (!gameRunning) {
-                    continue;
-                }
                 activePlayer.printPreConditions();
                 boolean takeCardDecision = activePlayer.strategy();
                 if (takeCardDecision) { // decided to take card
@@ -36,27 +33,28 @@ public class PiratePairs {
                         System.out.println("new score " + activePlayer.getScore());
                     }
                     if (deck.isDeckEmpty()) {
+                        System.out.println("---------------------");
+                        System.out.println("Reshuffling discarded cards into deck.");
                         deck.integrateDiscarded(discardDeck.getCardsArray());
                         discardDeck.clearDeck();
                     }
                 } else { // decided to sleal a card
-                    int lowestCard = activePlayer.findLowestCard(); // called the method on active player so it doesnt
-                                                                    // check self.cards
+                    int lowestCard = activePlayer.findLowestCard();
                     discardDeck.discardCards(activePlayer.getCardsArray());
-                    int[] tempArray = { lowestCard };
-                    discardDeck.discardCards(tempArray);
+                    discardDeck.discardCards(new int[]{lowestCard}); // discard lowest card
                     activePlayer.resetCards();
                     activePlayer.addScore(lowestCard);
 
                     System.out.println(activePlayer.getName() + " stole a " + lowestCard);
-                    System.out.println("New score " + activePlayer.getScore());
+                    System.out.println("New score: " + activePlayer.getScore());
                 }
 
-                if (activePlayer.getScore() > losingScore) { // elim and check winner
+                if (activePlayer.getScore() > losingScore) { // elim and check for winner
                     System.out.println(activePlayer.getName() + " is out");
                     activePlayer.removePlayer();
                     if (Player.existsWinner()) {
-                        gameRunning = Player.endGame();
+                        isGameRunning = Player.endGame();
+                        break;
                     }
                 }
             }
